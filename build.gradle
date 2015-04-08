@@ -8,6 +8,10 @@ buildscript {
 }
 apply plugin: 'android'
 
+ext.vMajor = 2
+ext.vMinor = 0
+ext.vBugfix = 0
+
 repositories {
     mavenCentral()
 }
@@ -27,6 +31,24 @@ android {
         minSdkVersion 7
         targetSdkVersion 19
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+        versionCode computeVersionCode()
+        versionName computeVersionName()
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("src/main/assets/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+
+        debug {
+            storeFile file("src/main/assets/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
     }
 
     sourceSets {
@@ -35,6 +57,53 @@ android {
             resources.srcDir file('src/test/res')
         }
     }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".v2.develop"
+            versionNameSuffix '-develop'
+            buildConfigField "boolean", "HOCKEY_ENABLED", "false"
+            buildConfigField "String", "HOCKEY_APP_ID", "\"\""
+            signingConfig signingConfigs.debug
+        }
+        alpha {
+            debuggable true
+            applicationIdSuffix ".v2.alpha"
+            versionNameSuffix '-alpha'
+            buildConfigField "boolean", "HOCKEY_ENABLED", "false"
+            buildConfigField "String", "HOCKEY_APP_ID", "\"\""
+            signingConfig signingConfigs.debug
+        }
+        beta {
+            debuggable true
+            applicationIdSuffix ".v2.beta"
+            versionNameSuffix '-beta'
+            shrinkResources true
+            zipAlignEnabled true
+            buildConfigField "boolean", "HOCKEY_ENABLED", "false"
+            buildConfigField "String", "HOCKEY_APP_ID", "\"\""
+            signingConfig signingConfigs.release
+        }
+        release {
+            buildConfigField "boolean", "HOCKEY_ENABLED", "false"
+            buildConfigField "String", "HOCKEY_APP_ID", "\"\""
+            debuggable false
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
+def getBuildNumber() {
+    System.getenv("BUILD_NUMBER") as Integer ?: 9999
+}
 
+def computeVersionName() {
+    return String.format('%d.%d.%d:%d', vMajor, vMinor, vBugfix, getBuildNumber())
+}
+
+def computeVersionCode() {
+    return (vMajor * 10000) + (vMinor * 1000) + getBuildNumber()
+}
