@@ -66,6 +66,8 @@ android {
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
             buildConfigField "String", "HOCKEY_APP_ID", "\"\""
             signingConfig signingConfigs.debug
+            buildConfigField "String", "GA_API_KEY", "\"UA-123456789-1\""
+            buildConfigField "String", "ENVIRONMENT", "\"demo.domain.com\""
         }
         alpha {
             debuggable true
@@ -74,6 +76,8 @@ android {
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
             buildConfigField "String", "HOCKEY_APP_ID", "\"\""
             signingConfig signingConfigs.debug
+            buildConfigField "String", "GA_API_KEY", "\"UA-123456789-1\""
+            buildConfigField "String", "ENVIRONMENT", "\"development.domain.com\""
         }
         beta {
             debuggable true
@@ -84,6 +88,8 @@ android {
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
             buildConfigField "String", "HOCKEY_APP_ID", "\"\""
             signingConfig signingConfigs.release
+            buildConfigField "String", "GA_API_KEY", "\"UA-123456789-1\""
+            buildConfigField "String", "ENVIRONMENT", "\"stage.domain.com\""
         }
         release {
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
@@ -92,6 +98,8 @@ android {
             shrinkResources true
             zipAlignEnabled true
             signingConfig signingConfigs.release
+            buildConfigField "String", "GA_API_KEY", "\"UA-123456789-1\""
+            buildConfigField "String", "ENVIRONMENT", "\"www.domain.com\""
         }
     }
 }
