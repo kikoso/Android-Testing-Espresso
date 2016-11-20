@@ -37,7 +37,7 @@ public class MainActivityInstrumentationTest extends ActivityInstrumentationTest
         onView(withId(R.id.hello_world_text)).check(matches(withText("Hello world!")));
     }
 
-    public void testFalseLabel() {
-        onView(withId(R.id.hello_world_text)).check(matches(withText("What a label!")));
-    }
+//    public void testFalseLabel() {
+//        onView(withId(R.id.hello_world_text)).check(matches(withText("What a label!")));
+//    }
 }
