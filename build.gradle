@@ -3,10 +3,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha1'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 ext.vMajor = 2
 ext.vMinor = 0
@@ -17,19 +17,19 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:gridlayout-v7:19.0.1'
-    compile 'com.android.support:support-v4:19.0.1'
-    compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.android.support:gridlayout-v7:25.2.0'
+    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     androidTestCompile files('libs/espresso-1.1-bundled.jar')
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 19
+        minSdkVersion 14
+        targetSdkVersion 25
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
         versionCode computeVersionCode()
         versionName computeVersionName()
@@ -83,7 +83,6 @@ android {
             debuggable true
             applicationIdSuffix ".v2.beta"
             versionNameSuffix '-beta'
-            shrinkResources true
             zipAlignEnabled true
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
             buildConfigField "String", "HOCKEY_APP_ID", "\"\""
@@ -95,7 +94,6 @@ android {
             buildConfigField "boolean", "HOCKEY_ENABLED", "false"
             buildConfigField "String", "HOCKEY_APP_ID", "\"\""
             debuggable false
-            shrinkResources true
             zipAlignEnabled true
             signingConfig signingConfigs.release
             buildConfigField "String", "GA_API_KEY", "\"UA-123456789-1\""
@@ -104,7 +102,7 @@ android {
     }
 }
 
-def getBuildNumber() {
+static def getBuildNumber() {
     System.getenv("BUILD_NUMBER") as Integer ?: 9999
 }
 
